@@ -39,15 +39,25 @@ class _AutenState extends State<Auten> {
   }
 
   Widget signIn() {
-    return RaisedButton(
-      child: Text('Sign In'),
+    return FlatButton(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+      color: Colors.blue[900],
+      child: Text(
+        'Sign In',
+        style: TextStyle(color: Colors.white),
+      ),
       onPressed: () {},
     );
   }
 
   Widget signUp() {
-    return RaisedButton(
-      child: Text('Sign Up'),
+    return OutlineButton(
+      borderSide: BorderSide(color: Colors.blue[900]),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+      child: Text(
+        'Sign Up',
+        style: TextStyle(color: Colors.blue[900]),
+      ),
       onPressed: () {},
     );
   }
