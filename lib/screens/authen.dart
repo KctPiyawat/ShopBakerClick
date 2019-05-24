@@ -24,11 +24,11 @@ class _AutenState extends State<Auten> {
           color: Colors.blue[900]),
     );
   }
-  
 
   Widget userTextFromField() {
     return TextFormField(
-      decoration:  InputDecoration(labelText: 'Your User :', hintText: 'User not Blank'),
+      decoration:
+          InputDecoration(labelText: 'Your User :', hintText: 'User not Blank'),
     );
   }
 
@@ -36,6 +36,20 @@ class _AutenState extends State<Auten> {
     return TextFormField(
         decoration: InputDecoration(
             labelText: 'Your Password', hintText: 'More 6 charetor'));
+  }
+
+  Widget signIn() {
+    return RaisedButton(
+      child: Text('Sign In'),
+      onPressed: () {},
+    );
+  }
+
+  Widget signUp() {
+    return RaisedButton(
+      child: Text('Sign Up'),
+      onPressed: () {},
+    );
   }
 
   @override
@@ -53,9 +67,6 @@ class _AutenState extends State<Auten> {
               child: showLogo(),
             ),
             Container(
-              margin: EdgeInsets.only(
-                top: 0.0,
-              ),
               child: showAppName(),
             ),
             Container(
@@ -65,6 +76,25 @@ class _AutenState extends State<Auten> {
             Container(
               margin: EdgeInsets.only(left: 50.0, right: 50.0),
               child: passwordFromField(),
+            ),
+            Container(
+              margin: EdgeInsets.only(left: 50.0, right: 50.0),
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: Container(
+                      margin: EdgeInsets.only(right: 2.5),
+                      child: signIn(),
+                    ),
+                  ),
+                  Expanded(
+                    child: Container(
+                      margin: EdgeInsets.only(left: 2.5),
+                      child: signUp(),
+                    ),
+                  )
+                ],
+              ),
             )
           ],
         ),
