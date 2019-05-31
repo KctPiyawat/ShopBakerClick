@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'register.dart';
 class Auten extends StatefulWidget {
   @override
   _AutenState createState() => _AutenState();
@@ -50,7 +50,7 @@ class _AutenState extends State<Auten> {
     );
   }
 
-  Widget signUp() {
+  Widget signUp(BuildContext context) {
     return OutlineButton(
       borderSide: BorderSide(color: Colors.blue[900]),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
@@ -58,7 +58,14 @@ class _AutenState extends State<Auten> {
         'Sign Up',
         style: TextStyle(color: Colors.blue[900]),
       ),
-      onPressed: () {},
+      onPressed: () {
+        print('You Clikc Signup');
+
+        // Create Route
+        var registerRoute = MaterialPageRoute(builder: (BuildContext context) => Register());
+        Navigator.of(context).push(registerRoute);
+
+      },
     );
   }
 
@@ -100,7 +107,7 @@ class _AutenState extends State<Auten> {
                   Expanded(
                     child: Container(
                       margin: EdgeInsets.only(left: 2.5),
-                      child: signUp(),
+                      child: signUp(context),
                     ),
                   )
                 ],

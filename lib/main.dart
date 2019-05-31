@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'screens/authen.dart';
+import 'screens/register.dart';
 
 void main() {
-  runApp(App());
+  runApp(MyApp());
 }
 
-class App extends StatelessWidget {
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp(debugShowCheckedModeBanner: false,
       home: Auten(),
     );
   }
