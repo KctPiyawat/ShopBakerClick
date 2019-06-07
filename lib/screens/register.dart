@@ -8,11 +8,13 @@ class Register extends StatefulWidget {
 class _RegisterState extends State<Register> {
   // Variable and Constant
   final formKey = GlobalKey<FormState>();
+  String nameString, emailString, passwordString;
 
   // Method
   Widget passwordTextFromFied() {
     return TextFormField(
-      decoration: InputDecoration(errorStyle: TextStyle(fontWeight: FontWeight.bold),
+      decoration: InputDecoration(
+        errorStyle: TextStyle(fontWeight: FontWeight.bold),
         labelText: 'Password : ',
         helperText: 'More 6 Charactor',
         labelStyle: TextStyle(
@@ -29,10 +31,14 @@ class _RegisterState extends State<Register> {
           color: Colors.blue[900],
           size: 36.0,
         ),
-      ),validator: (String value){
-        if (value.length<=5) {
+      ),
+      validator: (String value) {
+        if (value.length <= 5) {
           return 'Password Must More 5 Charactor';
         }
+      },
+      onSaved: (String value) {
+        passwordString = value;
       },
     );
   }
@@ -63,6 +69,9 @@ class _RegisterState extends State<Register> {
           return 'Email Format Only => you@email.com';
         }
       },
+      onSaved: (String value) {
+        emailString = value;
+      },
     );
   }
 
@@ -92,6 +101,9 @@ class _RegisterState extends State<Register> {
           return 'Please Fill Name in Blank';
         }
       },
+      onSaved: (String vaule) {
+        nameString = vaule;
+      },
     );
   }
 
@@ -103,8 +115,20 @@ class _RegisterState extends State<Register> {
         ),
         onPressed: () {
           print('You Click upload');
-          if (formKey.currentState.validate()) {}
+          if (formKey.currentState.validate()) {
+            formKey.currentState.save();
+            uploadToFirebase();
+
+          }
         });
+  }
+
+  void uploadToFirebase(){
+
+    print('Name = $nameString, Email = $emailString, $passwordString');
+
+
+
   }
 
   @override
