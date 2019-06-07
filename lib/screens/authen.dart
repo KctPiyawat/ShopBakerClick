@@ -74,7 +74,7 @@ class _AutenState extends State<Auten> {
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       body: Container(
-        padding: EdgeInsets.only(top: 120.0),
+        padding: EdgeInsets.only(top: 100.0),
         color: Colors.yellow,
         alignment: Alignment(0, -1),
         child: Column(

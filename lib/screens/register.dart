@@ -6,31 +6,41 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
+  // Variable and Constant
+  final formKey = GlobalKey<FormState>();
+
+  // Method
   Widget passwordTextFromFied() {
     return TextFormField(
-      decoration: InputDecoration(
-          labelText: 'Password : ',
-          helperText: 'More 6 Charactor',
-          labelStyle: TextStyle(
-            fontSize: 25.0,
-            fontWeight: FontWeight.bold,
-            color: Colors.blue[900],
-          ),
-          helperStyle: TextStyle(
-            color: Colors.blue[400],
-            fontStyle: FontStyle.italic,
-          ),
-          icon: Icon(
-            Icons.lock,
-            color: Colors.blue[900],
-            size: 36.0,
-          )),
+      decoration: InputDecoration(errorStyle: TextStyle(fontWeight: FontWeight.bold),
+        labelText: 'Password : ',
+        helperText: 'More 6 Charactor',
+        labelStyle: TextStyle(
+          fontSize: 25.0,
+          fontWeight: FontWeight.bold,
+          color: Colors.blue[900],
+        ),
+        helperStyle: TextStyle(
+          color: Colors.blue[400],
+          fontStyle: FontStyle.italic,
+        ),
+        icon: Icon(
+          Icons.lock,
+          color: Colors.blue[900],
+          size: 36.0,
+        ),
+      ),validator: (String value){
+        if (value.length<=5) {
+          return 'Password Must More 5 Charactor';
+        }
+      },
     );
   }
 
   Widget emailTetFromField() {
     return TextFormField(
       decoration: InputDecoration(
+        errorStyle: TextStyle(fontWeight: FontWeight.bold),
         labelText: 'Email : ',
         helperText: 'you@email.com',
         labelStyle: TextStyle(
@@ -48,12 +58,18 @@ class _RegisterState extends State<Register> {
           size: 36.0,
         ),
       ),
+      validator: (String value) {
+        if (!((value.contains('@')) && (value.contains('.')))) {
+          return 'Email Format Only => you@email.com';
+        }
+      },
     );
   }
 
   Widget nameTextFromField() {
-    return TextField(
+    return TextFormField(
       decoration: InputDecoration(
+        errorStyle: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
         labelText: 'Name : ',
         helperText: 'First Nane Only',
         labelStyle: TextStyle(
@@ -70,36 +86,48 @@ class _RegisterState extends State<Register> {
           size: 48.0,
         ),
       ),
+      validator: (String value) {
+        value = value.trim();
+        if (value.length == 0) {
+          return 'Please Fill Name in Blank';
+        }
+      },
     );
   }
 
   Widget uploadButtom() {
     return IconButton(
-      icon: Icon(
-        Icons.cloud_upload,
-        size: 36.0,
-      ),
-      onPressed: () {},
-    );
+        icon: Icon(
+          Icons.cloud_upload,
+          size: 36.0,
+        ),
+        onPressed: () {
+          print('You Click upload');
+          if (formKey.currentState.validate()) {}
+        });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomPadding: false,
       appBar: AppBar(
         backgroundColor: Colors.orange[900],
         title: Text('Register'),
         actions: <Widget>[uploadButtom()],
       ),
-      body: Container(
-        alignment: Alignment(0, -1),
-        padding: EdgeInsets.only(top: 60.0, left: 50.0, right: 50.0),
-        child: Column(
-          children: <Widget>[
-            nameTextFromField(),
-            emailTetFromField(),
-            passwordTextFromFied()
-          ],
+      body: Form(
+        key: formKey,
+        child: Container(
+          alignment: Alignment(0, -1),
+          padding: EdgeInsets.only(top: 60.0, left: 50.0, right: 50.0),
+          child: Column(
+            children: <Widget>[
+              nameTextFromField(),
+              emailTetFromField(),
+              passwordTextFromFied()
+            ],
+          ),
         ),
       ),
     );
