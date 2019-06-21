@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Register extends StatefulWidget {
   @override
@@ -9,7 +10,8 @@ class Register extends StatefulWidget {
 class _RegisterState extends State<Register> {
   // Variable and Constant
   final formKey = GlobalKey<FormState>();
-  String nameString, emailString, passwordString;
+  String nameString, emailString, passwordString, uidString;
+  FirebaseAuth firebaseAuth = FirebaseAuth.instance;
 
   // Method
   Widget passwordTextFromFied() {
@@ -126,12 +128,12 @@ class _RegisterState extends State<Register> {
   Future uploadToFirebase() async {
     print('Name = $nameString, Email = $emailString, $passwordString');
 
-    FirebaseAuth firebaseAuth = FirebaseAuth.instance;
     await firebaseAuth
         .createUserWithEmailAndPassword(
             email: emailString, password: passwordString)
         .then((objValue) {
       print('Register Success>');
+      findUid();
     }).catchError((objError) {
       String error = objError.message;
       print('error ==> $error');
@@ -139,9 +141,20 @@ class _RegisterState extends State<Register> {
     });
   }
 
+  Future findUid() async {
+
+    // Find Uid
+    FirebaseUser firebaseUser = await firebaseAuth.currentUser();
+    uidString = firebaseUser.uid;
+    print('uid ==> $uidString');
+    
+    
+  }
+
   Widget alertButton(BuildContext context) {
     return FlatButton(
-      child: Text('Close'),onPressed: (){
+      child: Text('Close'),
+      onPressed: () {
         Navigator.of(context).pop();
       },
     );
