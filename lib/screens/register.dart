@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Register extends StatefulWidget {
   @override
@@ -118,17 +119,45 @@ class _RegisterState extends State<Register> {
           if (formKey.currentState.validate()) {
             formKey.currentState.save();
             uploadToFirebase();
-
           }
         });
   }
 
-  void uploadToFirebase(){
-
+  Future uploadToFirebase() async {
     print('Name = $nameString, Email = $emailString, $passwordString');
 
+    FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+    await firebaseAuth
+        .createUserWithEmailAndPassword(
+            email: emailString, password: passwordString)
+        .then((objValue) {
+      print('Register Success>');
+    }).catchError((objError) {
+      String error = objError.message;
+      print('error ==> $error');
+      myShowDialog(error);
+    });
+  }
 
+  Widget alertButton(BuildContext context) {
+    return FlatButton(
+      child: Text('Close'),onPressed: (){
+        Navigator.of(context).pop();
+      },
+    );
+  }
 
+  void myShowDialog(String messageString) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Have Error'),
+          content: Text(messageString),
+          actions: <Widget>[alertButton(context)],
+        );
+      },
+    );
   }
 
   @override

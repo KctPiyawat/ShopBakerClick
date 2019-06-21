@@ -1,4 +1,4 @@
-package com.example.shop_bakerclick;
+package com.baker.shop_bakerclick;
 
 import android.os.Bundle;
 import io.flutter.app.FlutterActivity;
