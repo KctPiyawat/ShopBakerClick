@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:shop_bakerclick/screens/product_list.dart';
 
 class Register extends StatefulWidget {
   @override
@@ -111,18 +112,21 @@ class _RegisterState extends State<Register> {
   }
 
   Widget uploadButtom() {
-    return IconButton(
-        icon: Icon(
-          Icons.cloud_upload,
-          size: 36.0,
-        ),
-        onPressed: () {
-          print('You Click upload');
-          if (formKey.currentState.validate()) {
-            formKey.currentState.save();
-            uploadToFirebase();
-          }
-        });
+    return Container(
+      margin: EdgeInsets.only(right: 80.0),
+      child: IconButton(
+          icon: Icon(
+            Icons.cloud_upload,
+            size: 36.0,
+          ),
+          onPressed: () {
+            print('You Click upload');
+            if (formKey.currentState.validate()) {
+              formKey.currentState.save();
+              uploadToFirebase();
+            }
+          }),
+    );
   }
 
   Future uploadToFirebase() async {
@@ -133,7 +137,7 @@ class _RegisterState extends State<Register> {
             email: emailString, password: passwordString)
         .then((objValue) {
       print('Register Success>');
-      findUid();
+      findUidAndSetupDisplayName();
     }).catchError((objError) {
       String error = objError.message;
       print('error ==> $error');
@@ -141,14 +145,23 @@ class _RegisterState extends State<Register> {
     });
   }
 
-  Future findUid() async {
-
+  Future findUidAndSetupDisplayName() async {
     // Find Uid
-    FirebaseUser firebaseUser = await firebaseAuth.currentUser();
+    FirebaseUser firebaseUser =
+        await firebaseAuth.currentUser().then((objValue) {
+      // Setup DisplayName
+      UserUpdateInfo userUpdateInfo = UserUpdateInfo();
+      userUpdateInfo.displayName = nameString;
+      objValue.updateProfile(userUpdateInfo);
+
+      // Move To ProductList
+      var productRoute =
+          MaterialPageRoute(builder: (BuildContext context) => ProductList());
+      Navigator.of(context)
+          .pushAndRemoveUntil(productRoute, (Route<dynamic> route) => false);
+    });
     uidString = firebaseUser.uid;
     print('uid ==> $uidString');
-    
-    
   }
 
   Widget alertButton(BuildContext context) {
