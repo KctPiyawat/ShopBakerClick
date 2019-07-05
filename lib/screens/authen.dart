@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:shop_bakerclick/screens/product_list.dart';
 import 'register.dart';
@@ -21,7 +23,7 @@ class _AutenState extends State<Auten> {
     checkStatus();
   }
 
-  Future checkStatus() async {
+  Future<void> checkStatus() async {
     FirebaseAuth firebaseAuth = FirebaseAuth.instance;
     FirebaseUser firebaseUser = await firebaseAuth.currentUser();
     if (firebaseUser != null) {
@@ -106,7 +108,44 @@ class _AutenState extends State<Auten> {
     if (formKey.currentState.validate()) {
       formKey.currentState.save();
       print('email = $emailString, password = $passwordString');
+      authenFirebase();
     }
+  }
+
+  Future<void> authenFirebase() async {
+    FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+    await firebaseAuth
+        .signInWithEmailAndPassword(
+            email: emailString, password: passwordString)
+        .then((var responnse) {
+      print('Authen Success');
+    }).catchError((var response) {
+      print('Cannot Authen');
+      print('respone ==> $response');
+      String title = response.code;
+      String message = response.message;
+      print('title = = $title, message = $message');
+      myAlert(title, message);
+    });
+  }
+
+  void myAlert(String tiltlesString, String messageString) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(tiltlesString style: TextStyle(color: Colors.red),),
+          content: Text(messageString),
+          actions: <Widget>[
+            FlatButton(
+              child: Text("OK"),onPressed: (){
+                Navigator.of(context).pop();
+              },
+            )
+          ],
+        );
+      },
+    );
   }
 
   Widget signUp(BuildContext context) {
@@ -132,49 +171,50 @@ class _AutenState extends State<Auten> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomPadding: false,
-      body: Container(
-        padding: EdgeInsets.only(top: 100.0),
-        color: Colors.yellow,
-        alignment: Alignment(0, -1),
-        child: Form(
-          key: formKey,
-          child: Column(
-            children: <Widget>[
-              Container(
-                constraints: BoxConstraints.expand(width: 200.0, height: 200.0),
-                child: showLogo(),
-              ),
-              Container(
-                child: showAppName(),
-              ),
-              Container(
-                margin: EdgeInsets.only(left: 50.0, right: 50.0),
-                child: userTextFromField(),
-              ),
-              Container(
-                margin: EdgeInsets.only(left: 50.0, right: 50.0),
-                child: passwordFromField(),
-              ),
-              Container(
-                margin: EdgeInsets.only(left: 50.0, right: 50.0),
-                child: Row(
-                  children: <Widget>[
-                    Expanded(
-                      child: Container(
-                        margin: EdgeInsets.only(right: 2.5),
-                        child: signIn(),
-                      ),
-                    ),
-                    Expanded(
-                      child: Container(
-                        margin: EdgeInsets.only(left: 2.5),
-                        child: signUp(context),
-                      ),
-                    )
-                  ],
+      body: Center(
+        child: Container(
+          color: Colors.yellow,
+          child: Form(
+            key: formKey,
+            child: Column(
+              children: <Widget>[
+                Container(
+                  constraints:
+                      BoxConstraints.expand(width: 200.0, height: 200.0),
+                  child: showLogo(),
                 ),
-              )
-            ],
+                Container(
+                  child: showAppName(),
+                ),
+                Container(
+                  margin: EdgeInsets.only(left: 50.0, right: 50.0),
+                  child: userTextFromField(),
+                ),
+                Container(
+                  margin: EdgeInsets.only(left: 50.0, right: 50.0),
+                  child: passwordFromField(),
+                ),
+                Container(
+                  margin: EdgeInsets.only(left: 50.0, right: 50.0),
+                  child: Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: Container(
+                          margin: EdgeInsets.only(right: 2.5),
+                          child: signIn(),
+                        ),
+                      ),
+                      Expanded(
+                        child: Container(
+                          margin: EdgeInsets.only(left: 2.5),
+                          child: signUp(context),
+                        ),
+                      )
+                    ],
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),
