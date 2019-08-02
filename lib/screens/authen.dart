@@ -119,6 +119,7 @@ class _AutenState extends State<Auten> {
             email: emailString, password: passwordString)
         .then((var responnse) {
       print('Authen Success');
+      moveToProduct();
     }).catchError((var response) {
       print('Cannot Authen');
       print('respone ==> $response');
@@ -134,11 +135,15 @@ class _AutenState extends State<Auten> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(tiltlesString style: TextStyle(color: Colors.red),),
+          title: Text(
+            tiltlesString,
+            style: TextStyle(color: Colors.red),
+          ),
           content: Text(messageString),
           actions: <Widget>[
             FlatButton(
-              child: Text("OK"),onPressed: (){
+              child: Text("OK"),
+              onPressed: () {
                 Navigator.of(context).pop();
               },
             )
@@ -169,53 +174,48 @@ class _AutenState extends State<Auten> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomPadding: false,
-      body: Center(
-        child: Container(
-          color: Colors.yellow,
-          child: Form(
-            key: formKey,
-            child: Column(
-              children: <Widget>[
-                Container(
-                  constraints:
-                      BoxConstraints.expand(width: 200.0, height: 200.0),
-                  child: showLogo(),
-                ),
-                Container(
-                  child: showAppName(),
-                ),
-                Container(
-                  margin: EdgeInsets.only(left: 50.0, right: 50.0),
-                  child: userTextFromField(),
-                ),
-                Container(
-                  margin: EdgeInsets.only(left: 50.0, right: 50.0),
-                  child: passwordFromField(),
-                ),
-                Container(
-                  margin: EdgeInsets.only(left: 50.0, right: 50.0),
-                  child: Row(
-                    children: <Widget>[
-                      Expanded(
-                        child: Container(
-                          margin: EdgeInsets.only(right: 2.5),
-                          child: signIn(),
-                        ),
-                      ),
-                      Expanded(
-                        child: Container(
-                          margin: EdgeInsets.only(left: 2.5),
-                          child: signUp(context),
-                        ),
-                      )
-                    ],
-                  ),
-                )
-              ],
+    return Scaffold(backgroundColor: Colors.yellow[400],
+      resizeToAvoidBottomPadding: true,
+      body: Form(
+        key: formKey,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Container(
+              constraints: BoxConstraints.expand(width: 200.0, height: 180.0),
+              child: showLogo(),
             ),
-          ),
+            Container(
+              child: showAppName(),
+            ),
+            Container(
+              margin: EdgeInsets.only(left: 50.0, right: 50.0),
+              child: userTextFromField(),
+            ),
+            Container(
+              margin: EdgeInsets.only(left: 50.0, right: 50.0),
+              child: passwordFromField(),
+            ),
+            Container(
+              margin: EdgeInsets.only(left: 50.0, right: 50.0),
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: Container(
+                      margin: EdgeInsets.only(right: 2.5),
+                      child: signIn(),
+                    ),
+                  ),
+                  Expanded(
+                    child: Container(
+                      margin: EdgeInsets.only(left: 2.5),
+                      child: signUp(context),
+                    ),
+                  )
+                ],
+              ),
+            )
+          ],
         ),
       ),
     );
