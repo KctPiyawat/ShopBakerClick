@@ -56,13 +56,13 @@ class _ProductListState extends State<ProductList> {
 
   Widget showLogo() {
     return Container(
-      width: 80.0,
-      height: 80.0,
+      width: 100.0,
+      height: 100.0,
       child: Image.asset('images/logo.png'),
     );
   }
 
-  Widget showAppName() {
+   Widget showAppName() {
     return Text(
       'Baker Supply',
       style: TextStyle(
