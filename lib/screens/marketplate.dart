@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:shop_bakerclick/models/promotion_model.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:koukicons/assistant.dart';
+import 'package:shop_bakerclick/screens/category.dart';
 
 class Marketplate extends StatefulWidget {
   @override
@@ -136,6 +137,30 @@ class _MarketplateState extends State<Marketplate> {
     );
   }
 
+  Widget showThaiCandy() {
+    return Container(
+      width: 80.0,
+      height: 80.0,
+      child: Image.asset('images/thaicandy.png'),
+    );
+  }
+
+  Widget showCake() {
+    return Container(
+      width: 80.0,
+      height: 80.0,
+      child: Image.asset('images/cake.png'),
+    );
+  }
+
+  Widget showTea() {
+    return Container(
+      width: 80.0,
+      height: 80.0,
+      child: Image.asset('images/tea.png'),
+    );
+  }
+
   Widget showTextGroup(String title, String subTitle) {
     return Container(
       padding: EdgeInsets.only(
@@ -144,7 +169,7 @@ class _MarketplateState extends State<Marketplate> {
       ),
       color: Colors.white,
       height: iconSize,
-      width: MediaQuery.of(context).size.width - iconSize,
+      width: MediaQuery.of(context).size.width - iconSize - 8.0,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -160,23 +185,58 @@ class _MarketplateState extends State<Marketplate> {
   }
 
   Widget thaiCandy() {
-    return Row(
-      children: <Widget>[
-        showIconGroup(KoukiconsAssistant(), Colors.yellow.shade300),
-        showTextGroup('ขนมไทย',
-            'ขนมไทยแสนอร่อย ต้นตำหรับแท้ ๆ ขนมไทยแสนอร่อย ต้นตำหรับแท้ ๆ '),
-      ],
+    return GestureDetector(
+      child: Card(
+        child: Row(
+          children: <Widget>[
+            showIconGroup(showThaiCandy(), Colors.yellow.shade300),
+            showTextGroup('ขนมไทย',
+                'ขนมไทยแสนอร่อย ต้นตำหรับแท้ ๆ ขนมไทยแสนอร่อย ต้นตำหรับแท้ ๆ '),
+          ],
+        ),
+      ),
+      onTap: () {
+        MaterialPageRoute materialPageRoute =
+            MaterialPageRoute(builder: (BuildContext context) => Category());
+            Navigator.of(context).push(materialPageRoute);
+      },
+    );
+  }
+
+  Widget backery() {
+    return Card(
+      child: Row(
+        children: <Widget>[
+          showIconGroup(showCake(), Colors.brown.shade900),
+          showTextGroup('เบเกอรี่', 'เบเกอรี่แสนอร่อย เจ้าแรกของลาดกระบัง'),
+        ],
+      ),
+    );
+  }
+
+  Widget tea() {
+    return Card(
+      child: Row(
+        children: <Widget>[
+          showIconGroup(showTea(), Colors.green.shade900),
+          showTextGroup(
+              'ชาหลากหลาย', 'ชาแสนอร่อย ชานมไข่มุกเจ้าแรกในลาดกระบัง'),
+        ],
+      ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(color: Colors.grey.shade400,
+    return Container(
+      color: Colors.grey.shade200,
       child: ListView(
         children: <Widget>[
           showBanner(),
           titleBanner('Category'),
           thaiCandy(),
+          backery(),
+          tea(),
         ],
       ),
     );
