@@ -197,20 +197,26 @@ class _MarketplateState extends State<Marketplate> {
       ),
       onTap: () {
         MaterialPageRoute materialPageRoute =
-            MaterialPageRoute(builder: (BuildContext context) => Category());
+            MaterialPageRoute(builder: (BuildContext context) => Category(myCategory: 'อาหารจานด่วน',));
             Navigator.of(context).push(materialPageRoute);
       },
     );
   }
 
   Widget backery() {
-    return Card(
-      child: Row(
-        children: <Widget>[
-          showIconGroup(showCake(), Colors.brown.shade900),
-          showTextGroup('เบเกอรี่', 'เบเกอรี่แสนอร่อย เจ้าแรกของลาดกระบัง'),
-        ],
-      ),
+    return GestureDetector(
+          child: Card(
+        child: Row(
+          children: <Widget>[
+            showIconGroup(showCake(), Colors.brown.shade900),
+            showTextGroup('เบเกอรี่', 'เบเกอรี่แสนอร่อย เจ้าแรกของลาดกระบัง'),
+          ],
+        ),
+      ),onTap: (){
+          MaterialPageRoute materialPageRoute = MaterialPageRoute(builder: (BuildContext context) => Category(myCategory: 'แกง',));
+          Navigator.of(context).push(materialPageRoute);
+
+      },
     );
   }
 

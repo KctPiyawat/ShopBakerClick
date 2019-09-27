@@ -112,7 +112,7 @@ class _ProductListState extends State<ProductList> {
 
   Widget signOutButton() {
     return Container(
-      margin: EdgeInsets.only(right: 80.0),
+      // margin: EdgeInsets.only(right: 80.0),
       child: IconButton(
         tooltip: 'Sing Out',
         icon: Icon(Icons.exit_to_app),
