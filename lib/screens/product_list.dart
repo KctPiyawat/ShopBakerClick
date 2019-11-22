@@ -2,8 +2,10 @@ import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:shop_bakerclick/screens/information.dart';
+
 import 'package:shop_bakerclick/screens/marketplate.dart';
+import 'package:shop_bakerclick/utility/my_style.dart';
+import 'package:shop_bakerclick/widget/information.dart';
 
 class ProductList extends StatefulWidget {
   @override
@@ -19,6 +21,7 @@ class _ProductListState extends State<ProductList> {
   double myH1 = 24.0;
   double myH2 = 18.0;
   Widget myWidget = Marketplate();
+  String titleAppBar = 'Marketplate';
 
   // Method
 
@@ -57,7 +60,7 @@ class _ProductListState extends State<ProductList> {
   Widget showLogo() {
     return Container(
       width: 100.0,
-      height: 100.0,
+      height: 80.0,
       child: Image.asset('images/logo.png'),
     );
   }
@@ -145,6 +148,7 @@ class _ProductListState extends State<ProductList> {
       onTap: () {
         setState(() {
           myWidget = Marketplate();
+          titleAppBar = 'Marketplate';
         });
         Navigator.of(context).pop();
       },
@@ -167,6 +171,7 @@ class _ProductListState extends State<ProductList> {
       ),onTap: (){
         setState(() {
          myWidget = Information(); 
+         titleAppBar = 'Information';
         });
         Navigator.of(context).pop();
       },
@@ -176,8 +181,8 @@ class _ProductListState extends State<ProductList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Product List'),
+      appBar: AppBar(backgroundColor: Mystye().appBarColor,
+        title: Text(titleAppBar),
         actions: <Widget>[signOutButton()],
       ),
       body: myWidget,

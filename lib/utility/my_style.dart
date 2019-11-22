@@ -4,6 +4,7 @@ class Mystye {
 
   Color mainColor = Colors.green.shade700;
   Color wakeColor = Colors.green.shade200;
+  Color appBarColor = Colors.orange.shade700;
 
 
 
