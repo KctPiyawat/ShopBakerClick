@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:shop_bakerclick/screens/product_list.dart';
+import 'package:shop_bakerclick/screens/my_service.dart';
 
 class Register extends StatefulWidget {
   @override
@@ -156,7 +155,7 @@ class _RegisterState extends State<Register> {
 
       // Move To ProductList
       var productRoute =
-          MaterialPageRoute(builder: (BuildContext context) => ProductList());
+          MaterialPageRoute(builder: (BuildContext context) => MyService());
       Navigator.of(context)
           .pushAndRemoveUntil(productRoute, (Route<dynamic> route) => false);
     });

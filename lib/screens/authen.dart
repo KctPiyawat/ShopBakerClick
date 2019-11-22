@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:shop_bakerclick/screens/product_list.dart';
+import 'package:shop_bakerclick/screens/my_service.dart';
 import 'register.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -33,7 +33,7 @@ class _AutenState extends State<Auten> {
 
   void moveToProduct() {
     var productRoute =
-        MaterialPageRoute(builder: (BuildContext context) => ProductList());
+        MaterialPageRoute(builder: (BuildContext context) => MyService());
     Navigator.of(context)
         .pushAndRemoveUntil(productRoute, (Route<dynamic> route) => false);
   }
